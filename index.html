@@ -13,7 +13,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <style>
-      :root {
+            :root {
         --primary-color: #9d4edd;
         --secondary-color: #7b2cbf;
         --accent-color: #c77dff;
@@ -23,7 +23,8 @@
           #2575fc 50%,
           #f5576c 100%
         );
-        --glass-bg: rgba(255, 255, 255, 0.1);
+        --glass-bg: rgba(255, 255, 255, 0.15);
+        --border-radius: 20px;
       }
 
       * {
@@ -43,184 +44,145 @@
         background-size: 400% 400%;
         color: white;
         overflow-x: hidden;
-        animation: gradientFlow 15s ease infinite;
+        animation: gradientFlow 25s ease infinite;
+        line-height: 1.6;
       }
 
       .header {
         text-align: center;
-        padding: 3rem 1rem;
-        animation: slideDown 0.8s ease-out;
+        padding: 2rem 1rem;
+        width: 100%;
         position: relative;
+        backdrop-filter: blur(15px);
+        background: rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
       }
 
       .title {
-        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-size: clamp(2.8rem, 7vw, 4.5rem);
         margin-bottom: 0.5rem;
-        text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         background: linear-gradient(45deg, #fff, #e0aaff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        animation: titleEntrance 1s ease-out;
       }
 
       .subtitle {
-        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
         color: #f8f9fa;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         background: linear-gradient(45deg, #e0aaff, #c77dff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1rem;
       }
 
       .grid-container {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        padding: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 3rem 2rem;
         width: 100%;
-        max-width: 1400px;
+        max-width: 1600px;
         margin: auto;
-        perspective: 1000px;
       }
 
       .button {
         position: relative;
-        padding: 1.5rem 2rem;
-        font-size: 1.2rem;
+        padding: 2rem;
+        font-size: 1.3rem;
         background: var(--glass-bg);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: var(--border-radius);
         color: white;
         cursor: pointer;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(12px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(20px);
         overflow: hidden;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         display: flex;
         align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 120px;
         opacity: 0;
-        animation: fadeInUp 0.5s ease-out forwards;
+        animation: cardEntrance 0.6s ease-out forwards;
       }
 
       .button:hover {
-        background: rgba(157, 78, 221, 0.3);
-        transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 12px 30px rgba(157, 78, 221, 0.4);
-      }
-
-      .button:hover::before {
-        opacity: 1;
-      }
-
-      .button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(
-          600px circle at var(--x) var(--y),
-          rgba(199, 125, 255, 0.4),
-          transparent 40%
-        );
-        opacity: 0;
-        transition: opacity 0.3s;
+        background: rgba(157, 78, 221, 0.35);
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(157, 78, 221, 0.4);
       }
 
       .button i {
-        margin-right: 12px;
-        color: white;
-        font-size: 1.4em;
-        width: 30px;
-        animation: iconFloat 2s ease-in-out infinite;
+        margin-right: 15px;
+        font-size: 1.6em;
+        transition: transform 0.3s ease;
+      }
+
+      .button:hover i {
+        transform: scale(1.2) rotate(-5deg);
       }
 
       .filter-container {
-        position: relative;
-        height: 80px;
-        margin-bottom: 2rem;
+        margin: 2rem 0 3rem;
         width: 100%;
-        display: flex;
-        justify-content: center;
+        max-width: 1200px;
+        padding: 0 2rem;
       }
 
       .main-filter {
         display: flex;
-        gap: 1rem;
-        position: absolute;
-        top: 0;
-        transition: all 0.5s ease;
-      }
-
-      .main-filter.moved-down {
-        top: 100px;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        transition: all 0.4s ease;
       }
 
       .category-filters {
-        display: none;
-        gap: 1rem;
-        position: absolute;
-        top: 0;
-        justify-content: center;
-        width: 100%;
-      }
-
-      .category-filters.visible {
-        display: flex;
-        animation: fadeIn 0.3s ease-out;
+        gap: 1.5rem;
+        flex-wrap: wrap;
       }
 
       .filter-btn {
-        padding: 0.8rem 2rem;
-        border: none;
-        border-radius: 12px;
+        padding: 1rem 2.5rem;
+        border-radius: 15px;
         background: var(--glass-bg);
-        color: white;
-        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        font-weight: 600;
+        min-width: 180px;
         transition: all 0.3s ease;
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        font-weight: 500;
-        min-width: 150px;
-        text-align: center;
+        backdrop-filter: blur(15px);
       }
 
       .filter-btn.active {
-        background: rgba(157, 78, 221, 0.4);
-        box-shadow: 0 0 15px rgba(157, 78, 221, 0.3);
-      }
-
-      .filter-btn:hover {
-        transform: translateY(-2px);
+        background: rgba(157, 78, 221, 0.45);
+        box-shadow: 0 0 25px rgba(157, 78, 221, 0.35);
       }
 
       @keyframes gradientFlow {
-        0% {
-          background-position: 0% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
 
-      @keyframes fadeInUp {
+      @keyframes cardEntrance {
         from {
           opacity: 0;
-          transform: translateY(20px) rotateX(15deg);
+          transform: translateY(30px) scale(0.95);
         }
         to {
           opacity: 1;
-          transform: translateY(0) rotateX(0);
+          transform: translateY(0) scale(1);
         }
       }
 
-      @keyframes slideDown {
+      @keyframes titleEntrance {
         from {
           opacity: 0;
-          transform: translateY(-30px);
+          transform: translateY(-20px);
         }
         to {
           opacity: 1;
@@ -228,57 +190,68 @@
         }
       }
 
-      @keyframes iconFloat {
-        0%,
-        100% {
-          transform: translateY(0);
+      @media (max-width: 1200px) {
+        .grid-container {
+          padding: 2rem;
+          gap: 1.5rem;
         }
-        50% {
-          transform: translateY(-4px);
-        }
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
+        
+        .button {
+          font-size: 1.2rem;
+          min-height: 110px;
         }
       }
 
       @media (max-width: 768px) {
+        .title {
+          font-size: 2.5rem;
+        }
+        
+        .subtitle {
+          font-size: 1.2rem;
+        }
+        
         .grid-container {
           grid-template-columns: 1fr;
           padding: 1.5rem;
-          gap: 1rem;
+          gap: 1.2rem;
         }
-
+        
         .button {
+          padding: 1.5rem;
+          min-height: 100px;
           font-size: 1.1rem;
-          padding: 1.2rem;
         }
-
+        
         .filter-container {
-          height: 120px;
+          padding: 0 1rem;
         }
-
-        .main-filter {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .main-filter.moved-down {
-          top: 150px;
-        }
-
-        .category-filters {
-          flex-direction: column;
-          align-items: center;
-        }
-
+        
         .filter-btn {
-          width: 80%;
+          padding: 0.8rem 1.5rem;
+          min-width: 140px;
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .title {
+          font-size: 2.2rem;
+        }
+        
+        .button {
+          padding: 1.2rem;
+          min-height: 90px;
+        }
+        
+        .button i {
+          font-size: 1.4em;
+          margin-right: 10px;
+        }
+        
+        .filter-btn {
+          width: 100%;
+          min-width: auto;
         }
       }
     </style>
